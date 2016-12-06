@@ -1,0 +1,14 @@
+.btn-novo { margin-bottom: 10px;}
+.btn-radio {margin-left: 5px; font-size: 30px;}
+#InputFileImgPerfil { }
+
+/*BARRA DE PROGRESSO DA NOTIFICACAO*/
+  [data-notify="progressbar"] {
+  margin-bottom: 0px;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 5px;
+}
+
