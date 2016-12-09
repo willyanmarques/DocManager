@@ -7,7 +7,7 @@
   <?php 
 
   //Pega os usuarios do banco de dados
-   $sql_code = "SELECT d.id, d.prontuario, d.nome as nomeDetento, d.nome_mae, d.regime, d.instituicao_id, d.status, i.sigla, i.nome as nomeUnidade, d.dataCadastro FROM detento d, instituicao i WHERE d.instituicao_id = i.id ORDER BY d.nome";
+   $sql_code = "SELECT d.id, d.prontuario, d.nome as nomeDetento, d.nome_mae, d.regime, d.instituicao_id, d.status, i.sigla, i.nome as nomeUnidade, d.dataCadastro FROM detento d, instituicao i WHERE d.instituicao_id = i.id ORDER BY nomeDetento";
 
    $execute  = $mysqli  -> query($sql_code) or die ($mysqli->error);
    $detento  = $execute -> fetch_assoc();

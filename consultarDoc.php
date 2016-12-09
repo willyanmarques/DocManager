@@ -35,7 +35,7 @@
 
               <div class="col-md-6"> <!-- DETENTOS CADASTRADOS -->
               <label>Detento:</label>
-                  <?php $detento = $mysqli->query("SELECT id, prontuario, nome FROM detento ORDER BY nome"); ?>
+                  <?php $detento = $mysqli->query("SELECT id, prontuario, nome FROM detento WHERE status = 1 ORDER BY nome"); ?>
                     <div class="form-group">
                       <select name="detento" class="form-control select2" style="width: 100%;" required="required">
                       <option value="">Selecione um Detento</option>
