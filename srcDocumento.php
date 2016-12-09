@@ -62,7 +62,7 @@
             $dataDe2 = $dataDe->format('Y-m-d');
             $dataAte2 = $dataAte->format('Y-m-d');
 
-            $sql_code = "SELECT doc.id AS id_documento, doc.arquivo, doc.dataDocumento, doc.tipo_documento_id, doc.assunto, doc.observacao, doc.cod_validacao, doc.dataCadastro, det.id AS id_det, 
+            $sql_code = "SELECT doc.id AS id_documento, doc.arquivo, doc.dataDocumento, doc.tipo_documento_id, doc.assunto, doc.observacao, doc.cod_validacao AS chaveDoc, doc.dataCadastro, det.id AS id_det, 
                          det.prontuario, det.nome, det.instituicao_id, det.regime, tpdoc.id, tpdoc.descricao
                          FROM documento_detento doc, detento det, tipo_documento tpdoc WHERE doc.tipo_documento_id = tpdoc.id AND doc.detento_id = det.id AND doc.detento_id = '$id_detento' 
                          AND (doc.dataDocumento BETWEEN '$dataDe2' AND '$dataAte2') AND doc.assunto LIKE '%$assunto%' AND doc.tipo_documento_id LIKE '%$tipoDocumento%' ORDER BY tpdoc.descricao";
@@ -210,14 +210,17 @@
                               </div>
                               </div> <!-- /row -->
 
+                              <br>
+                              <div class="row">
+                              <div class="form-group">
+                              <div class="col-md-12">
+                              <label>Chave de autenticação:</label>
+                                <input type="text" class="form-control" name="chaveDoc" value="<?php echo $docDet['chaveDoc']; ?>" required="required" readonly>
+                              </div>
+                              </div>
+                              </div> <!-- /row -->
+
                               <input type="hidden" name="arquivo" value="<?php echo $docDet['arquivo']; ?>">
-                              <input type="hidden" name="chave" value="<?php echo $docDet['cod_validacao']; ?>">
-
-                              <!--<input id="" type="file" name="arquivo"> -->
-
-                              <style type="text/css">
-                                  #inputFile {display: none;}
-                              </style>
                               
                               </div> <!-- /modal-body-->
                              <div class="modal-footer">

@@ -4,15 +4,9 @@
 	$destinatario 	= 	strip_tags(trim($_POST['emailUnidade']));
 	$titulo 		= 	strip_tags(trim($_POST['tituloEmail']));
 	$mensagem		= 	strip_tags(trim($_POST['mensagem']));
-	$chave 			= 	$_POST['chave'];
+	$chave 			= 	$_POST['chaveDoc'];
 	$arquivo 		= 	$_POST['arquivo'];
-	var_dump($arquivo);
 
-	$tamanho =	'5242880'; //Tamanho max para envio 5MB convertido em Bytes
-	// Tipos de imagens validas para envio
-	$tipos 	 =  array('image/jpeg' => 'image/pjpeg',
-					  'image/jpeg' => 'image/jpeg',
-					  'image/png' => 'image/png'); 
 
 	if (empty($remetente)) {
 		$msg = 'O nome é obrigatório!';
@@ -44,20 +38,22 @@
 						<strong>Destinatario: </strong>{$destinatario}<br>
 						<strong>Assunto: </strong>{$titulo}<br>
 						<strong>Mensagem: </strong>{$mensagem}<br>
-						<strong>Chave de Validação: </strong>{$chave}<br>";
+						<strong>Chave de autenticação: </strong>{$chave}<br>";
 
 		$email ->MsgHTML($corpoEmail); // Carrega o corpo do Email definido a cima
 
-		$file_to_attach = '/opt/lampp/htdocs/DocManager/upload/documentos/detento/'.$arquivo;
-		$email->AddAttachment( $file_to_attach );
-		//$email ->AddAttachment($arquivo['tmp_name'], $arquivo['name']);
+		$path = '/opt/lampp/htdocs/DocManager/upload/documentos/detento/'.$arquivo;
+		$email->AddAttachment($path);
 
 		if ($email->Send()) {
 
 			//return true;
 			echo "<script>alert('Documento Enviado com Sucesso!');</script>";
 
-		} else { //return false; 
-			echo "<script>alert('Erro ao Enviar o Documento!);</script>"; }
+		} else { 
+
+			//return false; 
+			echo "<script>alert('Erro ao Enviar o Documento!);</script>"; 
+		}
 	}
 
