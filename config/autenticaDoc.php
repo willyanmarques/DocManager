@@ -17,9 +17,27 @@ if ($num > 0) {
 	$execute  = $mysqli  -> query($autenticaDoc) or die ($mysqli->error);
 	$autDoc  = $execute -> fetch_assoc();
 
+	    echo "<form action=\"../validaDocumento.php\" method='POST' name='formValidaDoc'>
+
+			    <input type='hidden' name='validaDoc' value='valido'/>
+			    
+			    <script type'text\javascript'> document.formValidaDoc.submit(); </script>
+			    
+			  </form>";
+	    
+		echo "<script>window.location.replace(\"../validaDocumento.php\")</script>";
+
 } else {
 
-	echo "Documento não encontrado! Por favor, verifique a chave e tente novamente.";
+	    echo "<form action=\"../validaDocumento.php\" method='POST' name='formValidaDoc'>
+
+			    <input type='hidden' name='validaDoc' value='invalido'/>
+			    
+			    <script type'text\javascript'> document.formValidaDoc.submit(); </script>
+			    
+			  </form>";
+	    
+		echo "<script>window.location.replace(\"../validaDocumento.php\")</script>";
 }
 
 

@@ -42,8 +42,45 @@
         </div>
       </form>
       <!-- /.lockscreen credentials -->
-
     </div>
+
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <?php 
+     
+
+        switch (@$_POST['validaDoc']) {
+        
+            case 'valido' :
+            echo "<div class='alert alert-success alert-dismissible'>";
+            echo "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+
+              echo "Documento validado com sucesso!";
+              unset ($_POST['validaDoc']);
+
+            echo "</div>";
+                break;
+
+            case 'invalido' :
+            echo "<div class='alert alert-danger alert-dismissible'>";
+            echo "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
+
+              echo "Documento não encontrado!<br>Por favor, verifique a chave e tente novamente.";
+              unset ($_POST['validaDoc']);
+
+            echo "</div>";
+                break;
+
+            default:
+                $var = $_POST['validaDoc'] = NULL;
+                break;
+        }
+
+        
+        ?>
+      </div>
+    </div>
+
     <!-- /.lockscreen-item -->
     <div class="text-center">
       Insira a chave do documento

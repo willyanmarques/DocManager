@@ -25,16 +25,7 @@
 	} elseif (empty($mensagem)) {
 		$msg = 'A mensagem é obrigatória!';
 		echo $msg;
-	} /*elseif (!is_uploaded_file($arquivo['tmp_name'])) {
-		$msg = 'O arquivo é obrigatório!';
-		echo $msg;
-	} elseif ($arquivo['size'] > $tamanho) {
-		$msg = 'O limite de tamanho do arquivo é de 5MB!';
-		echo $msg;
-	} elseif (!in_array($arquivo['type'], $tipos)) {
-		$msg = 'O tipo de documento permitito é: JPG, JPEG e PNG.';
-		echo $msg;
-	}*/ else {
+	} else {
 
 		require('PHPMailer/PHPMailerAutoload.php');
 		$email = new PHPMailer(); // Nova instancia da classe
