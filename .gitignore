@@ -1,0 +1,23 @@
+# Imagens #
+###################
+*.jpg
+*.jpeg
+*.gif
+*.png
+
+
+# Pacotes #
+############
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+
+# OS generated files #
+######################
+Thumbs.db

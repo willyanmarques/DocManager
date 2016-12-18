@@ -2,37 +2,6 @@
       session_start();
 ?>
 
-<!-- AJAX RECUPERAR SENHA -->
-       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-         <script type="text/javascript">
-           jQuery(document).ready(function(){
-             jQuery('#recuperaSenha').submit(function(){
-               var dados = jQuery( this ).serialize();
-
-               jQuery.ajax({
-                 type: "POST",
-                 url: "config/recuperaSenha.php",
-                 data: dados,
-                 success: function( data )
-                 {
-
-                    alert('Um E-mail com os dados de acesso foi enviado. Por favor, verifique sua caixa de entrada!')
-
-                       $('#recuperaSenha').each (function(){
-                       this.reset();
-                   });
-
-                 } // success
-
-               });
-               
-             return false;
-
-             });
-            });
-       </script>
-  <!-- /AJAX RECUPERAR SENHA -->
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,6 +20,37 @@
   <link rel="stylesheet" href="dist/css/AdminLTE.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="plugins/iCheck/square/blue.css">
+
+  <!-- AJAX RECUPERAR SENHA -->
+      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+           <script type="text/javascript">
+             jQuery(document).ready(function(){
+               jQuery('#recuperaSenha').submit(function(){
+                 var dados = jQuery( this ).serialize();
+
+                 jQuery.ajax({
+                   type: "POST",
+                   url: "config/recuperaSenha.php",
+                   data: dados,
+                   success: function( data )
+                   {
+
+                      alert('Um E-mail com os dados de acesso foi enviado. Por favor, verifique sua caixa de entrada!')
+
+                         $('#recuperaSenha').each (function(){
+                         this.reset();
+                     });
+
+                   } // success
+
+                 });
+                 
+               return false;
+
+               });
+              });
+         </script>
+    <!-- /AJAX RECUPERAR SENHA -->
 
 </head>
 <body class="hold-transition login-page">
@@ -89,17 +89,6 @@
       <div class="col-md-12">
        <?php
 
-          /*if (isset($_SESSION['loginErroUserOFF'])) {
-
-                        echo "<div class='alert alert-info alert-dismissible'>";
-                        echo "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
-
-                          echo $_SESSION['loginErroUserOFF'];
-                          unset ($_SESSION['loginErroUserOFF']);
-
-                        echo "</div>";
-
-                      }*/
 
           if  (isset($_SESSION['loginErro'])){
 
@@ -167,16 +156,6 @@
 <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="plugins/iCheck/icheck.min.js"></script>
-<script>
-  $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
-  });
-</script>
+
 </body>
 </html>

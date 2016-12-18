@@ -55,10 +55,11 @@
             echo "<div class='alert alert-success alert-dismissible'>";
             echo "<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>";
 
-              echo "Documento validado com sucesso!";
+              echo "O Sistema <b>Doc Manager</b> confirma a autenticidade deste documento.";
               unset ($_POST['validaDoc']);
 
             echo "</div>";
+
                 break;
 
             case 'invalido' :
@@ -79,7 +80,7 @@
         
         ?>
       </div>
-    </div>
+    </div> <!-- /ROW -->
 
     <!-- /.lockscreen-item -->
     <div class="text-center">
@@ -98,6 +99,7 @@
   <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
   <!-- Bootstrap 3.3.6 -->
   <script src="bootstrap/js/bootstrap.min.js"></script>
+
   <?php require 'dist/js/mascaras.html' ?>
   </body>
 </html>
