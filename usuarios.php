@@ -153,6 +153,7 @@
                                 $adm = "";
                                 $adm_inst = "";
                                 $consulta = "";
+                                $op_documento ="";
 
                               if ($usuario['perfil'] == "adm") {
 
@@ -162,7 +163,12 @@
                                   
                                   $adm_inst = "checked";
 
-                                } if ($usuario['perfil'] == "consulta") {
+                                } if ($usuario['perfil'] == "op_documento") {
+                                  
+                                  $op_documento = "checked";
+
+                                }
+                                if ($usuario['perfil'] == "consulta") {
                                   
                                   $consulta = "checked";
 
@@ -182,6 +188,11 @@
                                  Adm. da Instituição
                                 </label>
                                 
+                                <label class="ls-label-text">
+                                  <input type="radio" name="tp_perfil" value="op_documento" class="ls-field-radio" <?php echo $op_documento; ?>>
+                                  Oper. de Documento
+                                </label>
+
                                 <label class="ls-label-text">
                                   <input type="radio" name="tp_perfil" value="consulta" class="ls-field-radio" <?php echo $consulta; ?>>
                                   Consulta
