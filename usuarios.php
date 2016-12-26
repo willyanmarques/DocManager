@@ -67,7 +67,7 @@
                       else { echo "<span class=\"label label-danger\">Inativo</span>"; }
                 ?>
                 </td>
-                <td><?php echo $usuario['dataCadastro']; ?></td>
+                <td><?php echo date('d/m/Y - H:i:s', strtotime($usuario['dataCadastro'])); ?></td>
                 <td>
                   <div class="btn-acoes">
                   <div class="col-md-4">

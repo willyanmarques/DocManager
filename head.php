@@ -41,7 +41,7 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="css/ionicons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- bootstrap datepicker -->
   <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
     <!-- daterange picker -->
@@ -233,9 +233,11 @@ desired effect
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="novoDocumentoDet.php"><i class="fa fa-circle-o"></i>Novo Documento</a></li>
+            <li><a href="novoDocumentoDet.php"><i class="fa fa-circle-o"></i>Novo Documento Detento</a></li>
+            <li><a href="novoDocumentoInst.php"><i class="fa fa-circle-o"></i>Novo Documento Instituição</a></li>
             <li><a href="tiposDocumento.php"><i class="fa fa-circle-o"></i>Tipos de Documento</a></li>
-            <li><a href="consultarDoc.php"><i class="fa fa-circle-o"></i>Consultar Documento</a></li>
+            <li><a href="consultarDoc.php"><i class="fa fa-circle-o"></i>Consultar Documento Detento</a></li>
+            <li><a href="consultarDocInst.php"><i class="fa fa-circle-o"></i>Consultar Documento Inst</a></li>
             <li><a href="validaDocumento.php" target="_blank"><i class="fa fa-circle-o"></i>Validar Documento</a></li>
             
           </ul>

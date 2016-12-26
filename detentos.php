@@ -63,7 +63,7 @@
                       else { echo "<span class=\"label label-danger\">Inativo</span>"; }
                 ?>
                 </td>
-                <td><?php echo $detento['dataCadastro']; ?></td>
+                <td><?php echo date('d/m/Y', strtotime($detento['dataCadastro'])); ?></td>
                 <td>
                   <div class="btn-acoes">
                   <div class="col-md-6">

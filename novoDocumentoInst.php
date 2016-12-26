@@ -12,99 +12,80 @@
     <section class="content">
       <!-- Conteudo aqui -->
 
-  <!-- AJAX ENVIAR O FORMULARIO DOC INSTITUICAO -->
-       <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-            <script type="text/javascript">
-              jQuery(document).ready(function(){
-                jQuery('#docDetento').submit(function(){
-                  var dados = jQuery( this ).serialize();
-
-                  jQuery.ajax({
-                    type: "POST",
-                    url: "config/addDocInstituicao.php",
-                    data: dados,
-                    success: function( data )
-                    {
-
-                      $.notify('<strong>Operação Realizada com Sucesso!</strong>', {
-                              type: 'success',
-                              allow_dismiss: true,
-                              showProgressbar: false,
-                              placement: {
-                              from: 'top',
-                              align: 'center',
-                            }
-
-                            });
-
-                          $('#docDetento').each (function(){
-                          this.reset();
-                      });
-
-                    } // success
-
-                  });
-                  
-                return false;
-
-                });
-               });
-          </script>
-  <!-- /AJAX ENVIAR O FORMULARIO DOC INSTITUICAO -->
-
       <div class="row">
                 <div class="col-md-12">
           <!-- Custom Tabs -->
           <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab">Instituição</a></li>
-              <li><a href="#tab_2" data-toggle="tab">Tipos de documento</a></li>
-            </ul>
 
-        <!-- TAB DOC DETENTO -->
+        <!-- TAB DOC INST -->
             <div class="tab-content">
               <div class="tab-pane active" id="tab_1">
               <form id="docDetento" action="config/addDocInstituicao.php" method="POST" enctype="multipart/form-data"> <!-- FORM -->
+
               <div class="row">
+
+              <legend class="col-md-12" style="font-size: 18px;">Dados do remetente</legend>
+              <div class="col-md-3">
+                <label>Nome:</label>
+                  <input type="text" class="form-control" name="nomeRemetente" value="<?php echo $_SESSION['nome']." ".$_SESSION['sobrenome']?>" autocomplete="off" required readonly>
+                </div>
+
+                <div class="col-md-3">
+                <label>E-mail:</label>
+                  <input type="text" class="form-control" name="emailRemetente" value="<?php echo $_SESSION['email']?>" autocomplete="off" required readonly>
+                </div>
+
+                <?php 
+                $idLogSessao = $_SESSION['instituicao_id'];
+                $query = "SELECT i.tipo, i.nome FROM instituicao i, usuario u WHERE i.id = $idLogSessao";
+                $instituicaoLogado  = $mysqli  -> query($query) or die ($mysqli->error);
+                $instLog  = $instituicaoLogado -> fetch_assoc();
+
+                 ?>
+
+                <div class="col-md-4">
+                <label>Instituição:</label>
+                  <input type="text" class="form-control" name="instRemetente" value="<?php echo $instLog['tipo']." - ".$instLog['nome']?>" autocomplete="off" required readonly>
+                </div>
+
+
+              </div> <!--/.row -->
+
+              <div class="row">
+              <br>
+              <legend class="col-md-12" style="font-size: 18px;">Dados do documento</legend>
+              <div class="col-md-2">
+                <label>Data de resposta:</label>
+                <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" name="dataResposta" placeholder="dd/mm/aaaa" class="form-control pull-right data" required>
+                </div>
+              </div>
+
               <div class="col-md-2">
                 <label>Data de emissão:</label>
                 <div class="input-group date">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" name="dataDocumento" placeholder="dd/mm/aaaa" class="form-control pull-right" id="datepicker" autocomplete="off" required>
+                  <input type="text" name="dataDocumento" placeholder="dd/mm/aaaa" class="form-control pull-right data" required>
                 </div>
-              </div>
+              </div> 
 
-            <div class="col-md-5"> <!-- INSTITUICOES DE ORIGEM -->
-              <label>Origem:</label>
-              <?php $instituicao = $mysqli->query("SELECT id, tipo, nome, cidade, uf FROM instituicao ORDER BY tipo"); ?>
-                <div class="form-group">
-                  <select name="origem" class="form-control select2" style="width: 100%;">
-                  <option selected>Selecione a instituição de origem do documento</option>
-                    <?php foreach ($instituicao as $inst) { ?>
-                    <option value="<?php echo $inst['nome']; ?>"><?php echo $inst['tipo']." - ".$inst['nome']." (".$inst['cidade']."/".$inst['uf'].")";?></option>
-                     <?php } ?>
-                     <input type="hidden" name="id_inst_origem" value="<?php echo $inst['id']; ?>">
-                </select>
-              </div>                  
-              </div> <!-- /INSTITUICOES DE ORIGEM -->
-
-              <div class="col-md-5"> <!-- INSTITUICOES CADASTRADOS -->
-              <label>Destinatário:</label>
-              <?php $instituicao = $mysqli->query("SELECT id, tipo, nome FROM instituicao ORDER BY tipo"); ?>
-                <div class="form-group">
-                  <select name="destinatario" class="form-control select2" style="width: 100%;">
-                  <option>Selecione a instituição de destino</option>
-                    <?php foreach ($instituicao as $inst) { ?>
-                    <option value="<?php echo $inst['id']; ?>"><?php echo $inst['tipo']." - ".$inst['nome'];?></option>
-                     <?php } ?>
-                </select>
-              </div>                  
-              </div> <!-- /INSTITUICOES CADASTRADOS -->
-
-              </div> <!-- /row -->
-              <div class="row">
+              <div class="col-md-6"> <!-- INSTITUICOES DE ORIGEM -->
+                <label>Origem:</label>
+                <?php $instituicao = $mysqli->query("SELECT id, tipo, nome, cidade, uf FROM instituicao ORDER BY tipo"); ?>
+                  <div class="form-group">
+                    <select name="origem" class="form-control select2" style="width: 100%;">
+                    <option selected>Selecione a instituição de origem do documento</option>
+                      <?php foreach ($instituicao as $inst) { ?>
+                      <option value="<?php echo $inst['id']; ?>"><?php echo $inst['tipo']." - ".$inst['nome']." (".$inst['cidade']."/".$inst['uf'].")";?></option>
+                       <?php } ?>
+                  </select>
+                </div>                  
+                </div> <!-- /INSTITUICOES DE ORIGEM -->
 
               <div class="col-md-2"> <!-- TIPO DE DOCUMENTOS CADASTRADOS -->
               <label>Tipo do documento:</label>
@@ -119,7 +100,10 @@
               </div>                  
               </div> <!-- /TIPO DE DOCUMENTOS CADASTRADOS -->
 
-              <div class="col-md-3">
+              </div> <!-- /row -->
+
+              <div class="row">
+              <div class="col-md-4">
               <label>Assunto:</label>
                 <input type="text" class="form-control" name="assunto" placeholder="Assunto do documento" autocomplete="off" required>
               </div>
@@ -154,6 +138,7 @@
               </div> <!--/row -->
 
               <div class="row">
+              <br>
               <div class="col-md-12">
               <label>Observações:</label>
                 <textarea class="form-control" rows="4" name="observacoes" placeholder="Informações complementares sobre o documento." style="resize: none;"></textarea>
@@ -173,13 +158,7 @@
                 </div>
               </div>
               </form> <!-- /FORM -->
-              </div>
-              <!-- /.tab-pane -->
-      <!-- /TAB DOC DETENTO -->
 
-              <div class="tab-pane" id="tab_2">
-                <p>Tipos de documentos</p>
-              </div>
               <!-- /.tab-pane -->
             </div>
             <!-- /.tab-content -->
@@ -249,5 +228,8 @@
 
     ?>
 <!-- /CHAMA A NOTIFICACAO -->
+
+<!-- IMPORTANDO MASCARA -->
+<?php require 'dist/js/mascaras.html' ?>
 
 <?php require 'footer.php'; ?>

@@ -3,12 +3,14 @@
     require 'connection.php';
     require 'database.php';
 
+  $nomeRemetente = $_POST['nomeRemetente'];
+  $emailRemetente = $_POST['emailRemetente'];
+  $instRemetente = $_POST['instRemetente'];
   $dataDocumento = $_POST['dataDocumento'];
+  $dataResposta = $_POST['dataResposta'];
   $origem = $_POST['origem'];
-  $destinatario = $_POST['destinatario'];
   $tipoDocumento = $_POST['tipoDocumento'];
   $assunto = $_POST['assunto'];
-  $id_inst_origem =$_POST['id_inst_origem'];
   $chave = $_POST['chave'];
   $observacoes = $_POST['observacoes'];
   $arquivo = $_FILES['arquivo']; //Capturando o Input File
@@ -18,17 +20,23 @@
     
   $diretorio = "../upload/documentos/instituicao/"; //Caminho onde a imagem vai ser salva
 
+    $dataDoc = date('Y-m-d', strtotime($dataDocumento));
+    $dataDocResp = date('Y-m-d', strtotime($dataResposta));
+
+
   $ImgDocumento = DB_Image($arquivo, $diretorio);
 
-  $docInstituicao  = array('dataDocumento'         => $dataDocumento,
-                           'origem'           => $origem,
-                           'destinatario'        => $destinatario,
+  $docInstituicao  = array('nomeRemetente' => $nomeRemetente,
+                           'emailRemetente'           => $emailRemetente,
+                           'instRemetente'           => $instRemetente,
+                           'dataDocumento'         => $dataDoc,
+                           'dataResposta'         => $dataDocResp,
                            'assunto'   => $assunto,
                            'observacao'       => $observacoes,
                            'arquivo'       => $ImgDocumento,
                            'cod_validacao'        => $chave,
                            'tipo_documento_id'      => $tipoDocumento,
-                           'instituicao_id'      => $id_inst_origem,
+                           'instituicao_origem_id'      => $origem,
                            'dataCadastro'=> $NOW);
             
 
