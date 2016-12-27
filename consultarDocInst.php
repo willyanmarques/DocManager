@@ -46,21 +46,21 @@
                     </div>                  
               </div> <!-- /DETENTOS CADASTRADOS -->
 
-              <div class="col-md-4">
+              <div class="col-md-6">
               <label>Assunto:</label>
                 <input type="text" class="form-control" name="assunto" placeholder="Assunto do documento">
               </div>
 
 
-              <div class="col-md-2">
+             <!-- <div class="col-md-2">
                 <label>Data de resposta:</label>
                 <div class="input-group date">
                   <div class="input-group-addon">
                     <i class="fa fa-calendar"></i>
                   </div>
-                  <input type="text" name="dataResposta" placeholder="dd/mm/aaaa" class="form-control pull-right" autocomplete="on" >
+                  <input type="text" name="dataResposta" placeholder="dd/mm/aaaa" class="form-control pull-right" autocomplete="on">
                 </div>
-              </div>
+              </div> -->
 
               <div class="col-md-2">
                 <label>de:</label>

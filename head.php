@@ -136,9 +136,12 @@ desired effect
         require'config/conexao.php';
         date_default_timezone_set('America/Recife');
         $dataAtual = date('Y-m-d');
-        $result = $mysqli->query("SELECT COUNT(*) AS qtdDocs FROM documento_instituicao WHERE dataResposta >= '$dataAtual' AND status = 0");
-        $row = $result->fetch_assoc();
-        $result->close();
+        $sql_code = "SELECT doc.nomeRemetente, doc.dataResposta, doc.dataCadastro, doc.tipo_documento_id, tpdoc.id, tpdoc.descricao FROM documento_instituicao doc, tipo_documento tpdoc WHERE dataResposta <= '$dataAtual' AND status = 0 AND doc.tipo_documento_id = tpdoc.id";
+
+        $execute  = $mysqli  -> query($sql_code) or die ($mysqli->error);                                                                                
+        $docPendente  = $execute -> fetch_assoc();
+        $num      = $execute -> num_rows;
+
         ?>
 
           <!-- Notifications Menu -->
@@ -147,9 +150,10 @@ desired effect
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
              <?php 
-             if ($row['qtdDocs'] > 0) {
+
+             if ($num > 0) {
                
-               echo "<span class=\"label label-danger\">".$row['qtdDocs']."</span>";
+               echo "<span class=\"label label-danger\">".$num."</span>";
              } else {
 
 
@@ -157,19 +161,25 @@ desired effect
              ?>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem <?php echo $row['qtdDocs']; ?> documentos que presisam ser respondidos</li>
+              <li class="header">Você tem <?php echo $num; ?> documentos que presisam ser respondidos</li>
               <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
+                <?php if ($num > 0) { 
+                  do {  ?>
+
                   <li><!-- start notification -->
                    <a href="#">
-                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                      
+                      <i class="fa fa-warning text-red"></i> <?php echo $docPendente['descricao']." adicionado em ".date('d/m/y', strtotime($docPendente['dataCadastro'])) ; ?>
                     </a>
                   </li>
+                  <?php } while ($docPendente = $execute ->fetch_assoc()); 
+                  } else ("Nenhum documento pendente.") ?>
                   <!-- end notification -->
                 </ul>
               </li>
-              <li class="footer"><a href="#">Ver todas</a></li>
+              <!--<li class="footer"><a href="#">Ver todos</a></li>-->
             </ul>
           </li>
 
