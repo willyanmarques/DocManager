@@ -118,7 +118,7 @@ desired effect
       <!--<span class="logo-mini"><b>A</b>LT</span> -->
       <small class="logo-mini">DM</small>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><i class="fa fa-folder-open"></i> Doc Manager</span>
+      <span class="logo-lg" style="text-align: left;">Doc Manager</span>
 
     </a>
 
@@ -132,22 +132,39 @@ desired effect
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
+        <?php 
+        require'config/conexao.php';
+        date_default_timezone_set('America/Recife');
+        $dataAtual = date('Y-m-d');
+        $result = $mysqli->query("SELECT COUNT(*) AS qtdDocs FROM documento_instituicao WHERE dataResposta >= '$dataAtual' AND status = 0");
+        $row = $result->fetch_assoc();
+        $result->close();
+        ?>
+
           <!-- Notifications Menu -->
           <li class="dropdown notifications-menu">
             <!-- Menu toggle button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-bell-o"></i>
-              <span class="label label-success">0</span>
+             <?php 
+             if ($row['qtdDocs'] > 0) {
+               
+               echo "<span class=\"label label-danger\">".$row['qtdDocs']."</span>";
+             } else {
+
+
+             }
+             ?>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Você tem 0 notificações</li>
+              <li class="header">Você tem <?php echo $row['qtdDocs']; ?> documentos que presisam ser respondidos</li>
               <li>
                 <!-- Inner Menu: contains the notifications -->
                 <ul class="menu">
                   <li><!-- start notification -->
-                   <!-- <a href="#">
+                   <a href="#">
                       <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                    </a> -->
+                    </a>
                   </li>
                   <!-- end notification -->
                 </ul>
@@ -227,17 +244,30 @@ desired effect
         <li><a href="detentos.php"><i class="fa fa-user-times"></i> <span>Detentos</span></a></li>
 
           <li class="treeview">
-          <a href="#"><i class="fa fa-file-text"></i> <span>Documentos</span>
+          <a href="#"><i class="fa fa-file-text"></i> <span>Documentos Detento</span>
             <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="novoDocumentoDet.php"><i class="fa fa-circle-o"></i>Novo Documento Detento</a></li>
-            <li><a href="novoDocumentoInst.php"><i class="fa fa-circle-o"></i>Novo Documento Instituição</a></li>
+            <li><a href="novoDocumentoDet.php"><i class="fa fa-circle-o"></i>Novo Documento</a></li>
             <li><a href="tiposDocumento.php"><i class="fa fa-circle-o"></i>Tipos de Documento</a></li>
-            <li><a href="consultarDoc.php"><i class="fa fa-circle-o"></i>Consultar Documento Detento</a></li>
-            <li><a href="consultarDocInst.php"><i class="fa fa-circle-o"></i>Consultar Documento Inst</a></li>
+            <li><a href="consultarDoc.php"><i class="fa fa-circle-o"></i>Consultar Documento</a></li>
+            <li><a href="validaDocumento.php" target="_blank"><i class="fa fa-circle-o"></i>Validar Documento</a></li>
+            
+          </ul>
+        </li>
+
+          <li class="treeview">
+          <a href="#"><i class="fa fa-file-text"></i> <span>Documentos Instituição</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="novoDocumentoInst.php"><i class="fa fa-circle-o"></i>Novo Documento</a></li>
+            <li><a href="tiposDocumento.php"><i class="fa fa-circle-o"></i>Tipos de Documento</a></li>
+            <li><a href="consultarDocInst.php"><i class="fa fa-circle-o"></i>Consultar Documento</a></li>
             <li><a href="validaDocumento.php" target="_blank"><i class="fa fa-circle-o"></i>Validar Documento</a></li>
             
           </ul>

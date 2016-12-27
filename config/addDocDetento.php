@@ -18,8 +18,9 @@
   $NOW = date("Y-m-d H:i:s"); // Configurando Formatacao da Data/Hora 
     
   $diretorio = "../upload/documentos/detento/"; //Caminho onde a imagem vai ser salva
-
-  $dataDoc = DateTime::createFromFormat('Y-m-d', $dataDocumento);
+  
+  //$dataDoc = date('Y-m-d', strtotime($dataDocumento));
+  $dataDoc = DateTime::createFromFormat('d/m/Y', $dataDocumento) ->format('Y-m-d');
 
   $ImgDocumento = DB_Image($arquivo, $diretorio);
 

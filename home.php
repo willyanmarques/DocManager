@@ -91,7 +91,7 @@
                 ?>
 
               <h3><?php echo $row['qtd']; ?></h3>
-              <p>Detentos Cadastrados</p>
+              <p>DETENTOS CADASTRADOS</p>
             </div>
             <div class="icon">
               <i class="fa fa-lock"></i>

@@ -12,7 +12,7 @@
 
                     jQuery.ajax({
                       type: "POST",
-                      url: "config/enviarDoc.php",
+                      url: "config/enviarDocInst.php",
                       data: dados,
                       success: function( data )
                       {
@@ -45,38 +45,43 @@
         <section class="content">
 
         <?php 
-             $id_detento = @$_POST['detento'];
-             $tipoDocumento = @$_POST['tipoDocumento'];
-             $instituicao = @$_POST['instituicao'];
-             $origem = @$_POST['origem'];
-             $assunto = @$_POST['assunto'];
-             $dataDe = @$_POST['dataDe'];
 
-             $dataDe = DateTime::createFromFormat('d/m/Y', $dataDe);
+              $nome = @$_POST['nomeRemetente'];
+              $tipoDocumento = @$_POST['tipoDocumento'];
+              $instituicao = @$_POST['instituicao'];
+              $origem = @$_POST['origem'];
+              $assunto = @$_POST['assunto'];
 
-             $dataAte = @$_POST['dataAte'];
+              $dataDe = @$_POST['dataDe'];
 
-             $dataAte = DateTime::createFromFormat('d/m/Y', $dataAte);
+              $dataDe = DateTime::createFromFormat('d/m/Y', $dataDe); // Forcando conversao da data
 
-            //echo  var_export($dataDe, true);
-            $dataDe2 = $dataDe->format('Y-m-d');
-            $dataAte2 = $dataAte->format('Y-m-d');
+              $dataAte = @$_POST['dataAte'];
 
-            $sql_code = "SELECT doc.id AS id_documento, doc.arquivo, doc.dataDocumento, doc.tipo_documento_id, doc.assunto, doc.observacao, doc.cod_validacao AS chaveDoc, doc.dataCadastro, det.id AS id_det, 
-                         det.prontuario, det.nome, det.instituicao_id, det.regime, tpdoc.id, tpdoc.descricao
-                         FROM documento_detento doc, detento det, tipo_documento tpdoc WHERE doc.tipo_documento_id = tpdoc.id AND doc.detento_id = det.id AND doc.detento_id = '$id_detento' 
-                         AND (doc.dataDocumento BETWEEN '$dataDe2' AND '$dataAte2') AND doc.assunto LIKE '%$assunto%' AND doc.tipo_documento_id LIKE '%$tipoDocumento%' ORDER BY tpdoc.descricao";
+              $dataAte = DateTime::createFromFormat('d/m/Y', $dataAte); // Forcando conversao da data
+
+              $dataResposta = @$_POST['dataResposta'];
+
+              $dataResposta = DateTime::createFromFormat('d/m/Y', $dataResposta); // Forcando conversao da data
+
+               $dataDe2 = $dataDe->format('Y-m-d'); //Convertendo padrao americano
+               $dataAte2 = $dataAte->format('Y-m-d'); //Convertendo padrao americano
+               //$dataResposta2 = $dataResposta->format('Y-m-d'); //Convertendo padrao americano
+
+
+            $sql_code = "SELECT doc.id AS id_documento, doc.arquivo, doc.dataDocumento, doc.dataResposta, doc.tipo_documento_id, doc.assunto, doc.observacao, doc.cod_validacao AS chaveDoc, doc.dataCadastro, doc.nomeRemetente, doc.emailRemetente, doc.instRemetente, tpdoc.id, tpdoc.descricao FROM documento_instituicao doc, tipo_documento tpdoc WHERE doc.tipo_documento_id = tpdoc.id AND doc.nomeRemetente = '$nome' AND (doc.dataDocumento BETWEEN '$dataDe2' AND '$dataAte2') AND doc.assunto LIKE '%$assunto%' AND doc.tipo_documento_id LIKE '%$tipoDocumento%' ORDER BY tpdoc.descricao";
+
 
             $execute  = $mysqli  -> query($sql_code) or die ($mysqli->error);                                                                                
-            $docDet  = $execute -> fetch_assoc();
+            $docInst  = $execute -> fetch_assoc();
             $num      = $execute -> num_rows;
-            
-            $dataInicio = date("d/m/y", strtotime($dataDe2));
-            $dataFim = date("d/m/y", strtotime($dataAte2));
+
+            $dataInicio = date("d/m/Y", strtotime($dataDe2));
+            $dataFim = date("d/m/Y", strtotime($dataAte2));
             ?>                                                                                                      
 
                 <div class="panel panel-default">
-                <div class="panel-heading"><h4><b>Exibindo documentos de: </b> <?php echo $docDet['nome'];?> <b>no período de:</b> <?php echo $dataInicio." à ".$dataFim;?></h4>
+                <div class="panel-heading"><h4><b>Exibindo documentos do remetente: </b> <?php echo $docInst['nomeRemetente'];?> <b>no período de:</b> <?php echo $dataInicio." à ".$dataFim;?></h4>
                 </div>
                   <div class="panel-body">
                     <div class="row">
@@ -90,7 +95,7 @@
                         <div class="box box-primary">
                           <div class="box-body box-profile">
                             <div class="caixa_corte"> 
-                           <img id="imgCorte" class="img-responsive img-thumbnail" width="380px" src="upload/documentos/detento/<?php echo $docDet['arquivo'];?>">
+                           <img id="imgCorte" class="img-responsive img-thumbnail" width="380px" src="upload/documentos/instituicao/<?php echo $docInst['arquivo'];?>">
                            </div>
                            <!-- <h3 class="profile-username text-center">Nina Mcintire</h3>
 
@@ -98,24 +103,42 @@
 
                             <ul class="list-group list-group-unbordered">
                               <li class="list-group-item">
-                                <b>Tipo:</b> <span><?php echo $docDet['descricao']; ?></span>
+                                <b>Tipo:</b> <span><?php echo $docInst['descricao']; ?></span>
                               </li>
                               <li class="list-group-item">
-                                <b>Assunto:</b> <span><?php echo $docDet['assunto']; ?></span> 
+                                <b>Assunto:</b> <span><?php echo $docInst['assunto']; ?></span> 
                               </li>
                               <li class="list-group-item">
 
                                 <?php 
-                                $data = $docDet['dataDocumento'];
+                                $data = $docInst['dataDocumento'];
                                 $novaData = date("d/m/Y", strtotime($data));
                                 ?>
 
                                 <b>Cadastrado em:</b> <span><?php echo $novaData; ?></span> 
 
                               </li>
+
+                              <li class="list-group-item">
+
+                                <?php 
+                                $dataAtual = date('Y-m-d');
+                                ?>
+
+                                <b>Data de resposta:</b> 
+                                <?php if ($docInst['dataResposta'] >= $dataAtual) {
+
+                                  echo "<span style=\"color: #f20909\">".date("d/m/Y", strtotime($docInst['dataResposta']))."</span>"; 
+                                } else {
+
+                                  echo "<span>".date("d/m/Y", strtotime($docInst['dataResposta']))."</span>"; 
+
+                                  }?> 
+
+                              </li>
                             </ul>
 
-                            <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#view_doc_<?php echo $docDet['id_documento'];?>">Visualizar documento</a>
+                            <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#view_doc_<?php echo $docInst['id_documento'];?>">Visualizar documento</a>
                           </div>
                           <!-- /.box-body -->
                         </div>
@@ -124,7 +147,7 @@
 
                         <!-- Modal Exibir Documento -->
 
-                        <div class="modal fade" tabindex="-1" role="dialog" id="view_doc_<?php echo $docDet['id_documento'];?>">
+                        <div class="modal fade" tabindex="-1" role="dialog" id="view_doc_<?php echo $docInst['id_documento'];?>">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -133,11 +156,11 @@
                               </div>
                               <div class="modal-body">
 
-                              <img class="img-responsive img-thumbnail" src="upload/documentos/detento/<?php echo $docDet['arquivo'];?>">
+                              <img class="img-responsive img-thumbnail" src="upload/documentos/instituicao/<?php echo $docInst['arquivo'];?>">
 
                               </div>
                              <div class="modal-footer">
-                               <a href="#" class="btn btn-success" data-toggle="modal" data-target="#docEmail_<?php echo $docDet['id_documento'];?>">Enviar por E-mail</b></a>
+                               <a href="#" class="btn btn-success" data-toggle="modal" data-target="#docEmail_<?php echo $docInst['id_documento'];?>">Enviar por E-mail</b></a>
                                <button type="submit" class="btn btn-primary">Editar</button>
                                <!--<button type="submit" class="btn btn-danger">Excluir</button>-->
                                <button type="submit" class="btn btn-warning">Imprimir</button>
@@ -151,7 +174,7 @@
 
                         <!-- Modal Envio Documento -->
 
-                        <div class="modal fade" tabindex="-1" role="dialog" id="docEmail_<?php echo $docDet['id_documento'];?>">
+                        <div class="modal fade" tabindex="-1" role="dialog" id="docEmail_<?php echo $docInst['id_documento'];?>">
                           <div class="modal-dialog" role="document">
                             <div class="modal-content">
                               <div class="modal-header">
@@ -216,12 +239,12 @@
                               <div class="form-group">
                               <div class="col-md-12">
                               <label>Chave de autenticação:</label>
-                                <input type="text" class="form-control" name="chaveDoc" value="<?php echo $docDet['chaveDoc']; ?>" required="required" readonly>
+                                <input type="text" class="form-control" name="chaveDoc" value="<?php echo $docInst['chaveDoc']; ?>" required="required" readonly>
                               </div>
                               </div>
                               </div> <!-- /row -->
 
-                              <input type="hidden" name="arquivo" value="<?php echo $docDet['arquivo']; ?>">
+                              <input type="hidden" name="arquivo" value="<?php echo $docInst['arquivo']; ?>">
                               
                               </div> <!-- /modal-body-->
                              <div class="modal-footer">
@@ -235,7 +258,7 @@
                         
                         <!-- /Modal Envio Documento -->  
 
-             <?php   }  while ($docDet = $execute ->fetch_assoc()); ?>
+             <?php   }  while ($docInst = $execute ->fetch_assoc()); ?>
 
                     </div>
                     </div>

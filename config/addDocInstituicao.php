@@ -20,8 +20,10 @@
     
   $diretorio = "../upload/documentos/instituicao/"; //Caminho onde a imagem vai ser salva
 
-    $dataDoc = date('Y-m-d', strtotime($dataDocumento));
-    $dataDocResp = date('Y-m-d', strtotime($dataResposta));
+  //$dataDoc = date('Y-m-d', strtotime($dataDocumento));
+  $dataDoc = DateTime::createFromFormat('d/m/Y', $dataDocumento) ->format('Y-m-d');
+  $dataDocResp = DateTime::createFromFormat('d/m/Y', $dataResposta) ->format('Y-m-d');
+  //$dataDocResp = date('Y-m-d', strtotime($dataResposta));
 
 
   $ImgDocumento = DB_Image($arquivo, $diretorio);
@@ -34,6 +36,7 @@
                            'assunto'   => $assunto,
                            'observacao'       => $observacoes,
                            'arquivo'       => $ImgDocumento,
+                           'status'       => 0,
                            'cod_validacao'        => $chave,
                            'tipo_documento_id'      => $tipoDocumento,
                            'instituicao_origem_id'      => $origem,
