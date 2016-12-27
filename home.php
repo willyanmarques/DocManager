@@ -103,17 +103,76 @@
 
         <div class="col-md-3 col-sm-6 col-xs-12">
           <div class="info-box">
-            <span class="info-box-icon bg-green"><i class="ion ion-ios-gear-outline"></i></span>
-
+            <span class="info-box-icon bg-green"><i class="fa fa-unlock"></i></span>
+            <?php 
+            $result = $mysqli->query("SELECT COUNT(*) AS qtd FROM detento WHERE regime = 'aberto'");
+            $row = $result->fetch_assoc();
+            $result->close();
+            ?>
             <div class="info-box-content">
-              <span class="info-box-text">DETENTOS REGIME</span>
-              <span class="info-box-number">90<small>%</small></span>
+              <span class="info-box-text">REGIME ABERTO</span>
+              <span class="info-box-number"><?php echo $row['qtd']; ?><small> DETENTOS</small></span>
             </div>
             <!-- /.info-box-content -->
           </div>
           <!-- /.info-box -->
         </div>
         <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-yellow"><i class="fa fa-unlock-alt"></i></span>
+            <?php 
+            $result = $mysqli->query("SELECT COUNT(*) AS qtd FROM detento WHERE regime = 's_aberto'");
+            $row = $result->fetch_assoc();
+            $result->close();
+            ?>
+            <div class="info-box-content">
+              <span class="info-box-text">REGIME SEMIABERTO</span>
+              <span class="info-box-number"><?php echo $row['qtd']; ?><small> DETENTOS</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-red"><i class="fa fa-lock"></i></span>
+            <?php 
+            $result = $mysqli->query("SELECT COUNT(*) AS qtd FROM detento WHERE regime = 'fechado'");
+            $row = $result->fetch_assoc();
+            $result->close();
+            ?>
+            <div class="info-box-content">
+              <span class="info-box-text">REGIME FECHADO</span>
+              <span class="info-box-number"><?php echo $row['qtd']; ?><small> DETENTOS</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box">
+            <span class="info-box-icon bg-gray"><i class="fa fa-thumbs-down"></i></span>
+            <?php 
+            $result = $mysqli->query("SELECT COUNT(*) AS qtd FROM detento WHERE status = '0'");
+            $row = $result->fetch_assoc();
+            $result->close();
+            ?>
+            <div class="info-box-content">
+              <span class="info-box-text">INATIVO</span>
+              <span class="info-box-number"><?php echo $row['qtd']; ?><small> DETENTOS</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        </div>
 
     </section>
     <!-- /.content -->
